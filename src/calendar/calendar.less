@@ -1,0 +1,52 @@
+@import "./../colors.less";
+
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+
+    .day {
+        /* on a row of 8 cols, each col will need 12.5%
+        so we set the basis to 13% to always ensure wrapping after the 7th col */
+        flex: 1 0 13%;
+        padding: 5px 0 10px 0;
+        outline: 1px solid rgba(50, 50, 50, 0.1);
+        cursor: pointer;
+
+        &.selected {
+            background-color: rgba(99, 99, 99, 0.2);
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+
+        &.today .date {
+            font-weight: bold;
+        }
+
+        .dots {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2px;
+
+            .dot {
+                border: 2px solid transparent;
+
+                &.starts-on-this-day {
+                    margin-left: 2px;
+
+                }
+
+                &.ends-on-this-day {
+                    margin-right: 2px;
+                }
+
+                each(@colors, {
+                    &.@{key} {
+                        border-color: @value;
+                    }
+                })
+            }
+
+        }
+    }
+}

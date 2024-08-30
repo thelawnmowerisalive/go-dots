@@ -1,0 +1,111 @@
+@import "./../colors.less";
+
+.events {
+    flex-grow: 1;
+    overflow: auto;
+
+    .event {
+        border-style: solid;
+        border-width: 5px 0 0 2px;
+        border-radius: 12px 12px 0 12px;
+
+        text-align: left;
+        padding: 2px 5px 5px 5px;
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        .blurb {
+            color: gray;
+            font-style: italic;
+            font-size: smaller;
+            padding-left: 4px;
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 2px;
+        }
+
+        &:not(.expanded) {
+            cursor: pointer;
+        }
+
+        &.expanded {
+            flex-direction: column;
+            align-items: unset;
+            gap: 4px;
+
+            label {
+                color: gray;
+                font-style: italic;
+                font-size: smaller;
+            }
+
+            .timeline {
+                display: flex;
+
+                .time {
+                    width: 50%;
+                }
+            }
+
+            .details {
+                display: flex;
+                flex-wrap: wrap;
+
+                label {
+                    width: 100%;
+                }
+
+                .detail {
+                    display: flex;
+                    width: 50%;
+
+                    &.link {
+                        margin-left: auto;
+                        align-items: flex-start;
+                    }
+
+                    &.cannot-be-shiny {
+                        text-decoration: line-through;
+                    }
+
+                    &.none {
+                        color: gray;
+                    }
+                }
+            }
+
+            img, a img {
+                width: 1em;
+                height: 1em;
+                margin-right: 2px;
+                margin-top: 0.25em;
+            }
+
+        }
+
+        &.expanded::before {
+            display: inline-block;
+            border-radius: 9px 9px 12px 0;
+            width: 100%;
+            margin: -5px 0 0 -5px;
+            padding: 0 5px 5px 5px;
+            color: white;
+        }
+
+        each(@colors, {
+            &.@{key} {
+                border-color: @value;
+
+                &.expanded::before {
+                    content: "@{key}";
+                    background-color: @value;
+                }
+            }
+        })
+}
+}
