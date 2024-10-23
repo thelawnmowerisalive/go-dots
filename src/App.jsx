@@ -6,13 +6,7 @@ import leek from "./assets/leek.svg";
 import gh from "./assets/gh.svg";
 
 const DEFAULT = {
-  startOfWeek: 'monday',
-  hidden: [
-    'research-breakthrough',
-    'raid-battles',
-    'go-battle-league',
-    'season'
-  ]
+  startOfWeek: 'monday'
 }
 
 function App() {

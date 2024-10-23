@@ -9,7 +9,7 @@ import { getFirstDayOfTheWeek, goToStart, isBetween } from "./utils";
  * @param {{events: []}} 
  * @returns 
  */
-function createInitialState({ date, events, settings: {startOfWeek, hidden} }) {
+function createInitialState({ date, events, settings: { startOfWeek } }) {
     // find first day of the week
     const today = date ? new Date(date) : new Date();
     goToStart(today);
@@ -17,12 +17,20 @@ function createInitialState({ date, events, settings: {startOfWeek, hidden} }) {
 
     // compute start time and end time for each event,
     // and sort by end time
-    events = events.map(event => ({
-        ...event,
-        startTime: new Date(event.start).getTime(),
-        endTime: new Date(event.end).getTime(),
-        hidden: hidden.includes(event.eventType)
-    }));
+    events = events
+        .map(event => {
+            const startTime = new Date(event.start).getTime();
+            const endTime = new Date(event.end).getTime();
+            const duration = (endTime - startTime) / 3600000;
+            const hidden = duration >= 168; // one week
+            return {
+                ...event,
+                startTime,
+                endTime,
+                duration,
+                hidden
+            }
+        });
     events.sort((e1, e2) => {
         // sort by start time;
         // for events starting at the same time, the shortest one will be shown first
