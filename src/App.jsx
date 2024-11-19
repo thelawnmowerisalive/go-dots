@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Calendar from './calendar/Calendar';
-
-import leek from "./assets/leek.svg";
 import gh from "./assets/gh.svg";
+import leek from "./assets/leek.svg";
+import Calendar from './calendar/Calendar';
 
 const DEFAULT = {
   startOfWeek: 'monday'
@@ -29,6 +28,8 @@ function App() {
     }
   }, []);
 
+
+  
   if (!data) {
     return <>DATA NOT READY</>
   }

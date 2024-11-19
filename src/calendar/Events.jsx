@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
+import { FaBinoculars } from "react-icons/fa6";
+import { GiHighGrass } from "react-icons/gi";
+import { HiOutlineExternalLink } from "react-icons/hi";
+import { HiOutlineGift, HiOutlineQuestionMarkCircle, HiOutlineSparkles } from "react-icons/hi2";
 import "./events.less";
 import { isSameDay, toHour } from "./utils";
-import link from "./../assets/link.svg";
-import shiny from "./../assets/shiny.svg";
-import bonus from "./../assets/bonus.svg";
-import question from "./../assets/question.svg";
-import spawns from "./../assets/spawns.svg";
-import research from "./../assets/research.svg";
 
 function blurb(date, event) {
     if (isSameDay([event.startTime, event.endTime])) {
@@ -86,7 +84,7 @@ function Event({ event }) {
             <label>Details:</label>
             <div className="details">
                 <EventDetails eventType={event.eventType} extraData={event.extraData} />
-                <a className="detail link" href={event.link} target="_blank"><img src={link} /> See more...</a>
+                <a className="detail link" href={event.link} target="_blank"><HiOutlineExternalLink /> See more...</a>
             </div>
         </div>
     )
@@ -117,7 +115,7 @@ function EventDetails({ eventType, extraData }) {
             if (extraData.generic.hasSpawns) {
                 details.push(
                     <div className="detail spawns" key="spawns">
-                        <img src={spawns} />
+                        <GiHighGrass />
                         Event spawns.
                     </div>
                 );
@@ -125,7 +123,7 @@ function EventDetails({ eventType, extraData }) {
             if (extraData.generic.hasFieldResearchTasks) {
                 details.push(
                     <div className="detail field-research-tasks" key="field-research-tasks">
-                        <img src={research} />
+                        <FaBinoculars />
                         Event field research tasks.
                     </div>
                 );
@@ -135,7 +133,7 @@ function EventDetails({ eventType, extraData }) {
             }
             return (
                 <div className="detail none">
-                    <img src={question} />
+                    <HiOutlineQuestionMarkCircle />
                     None available.
                 </div>
             )
@@ -145,7 +143,7 @@ function EventDetails({ eventType, extraData }) {
 function CanBeShiny({ flag }) {
     return (
         <div className={`detail ${flag ? "can-be-shiny" : "cannot-be-shiny"}`}>
-            <img src={shiny} />
+            <HiOutlineSparkles />
             {
                 flag ? "Can be shiny" : "Cannot be shiny"
             }
@@ -156,7 +154,7 @@ function CanBeShiny({ flag }) {
 function Bonus({ text }) {
     return (
         <div className="detail bonus">
-            <img src={bonus} />
+            <HiOutlineGift />
             {text}
         </div>
     )
