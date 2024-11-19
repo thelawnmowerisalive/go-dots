@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import "./calendar.less";
 import Day from "./Day";
 import DayOfTheWeek from "./DayOfTheWeek";
@@ -22,7 +22,7 @@ function createInitialState({ date, events, settings: { startOfWeek } }) {
             const startTime = new Date(event.start).getTime();
             const endTime = new Date(event.end).getTime();
             const duration = (endTime - startTime) / 3600000;
-            const hidden = duration >= 168; // one week
+            const hidden = duration >= 144; // six days
             return {
                 ...event,
                 startTime,
@@ -128,6 +128,30 @@ export default function Calendar({ date, events, settings }) {
         header.push(sunday);
     }
 
+    const showNotification = () => {
+        Notification.requestPermission()
+            .then(result => {
+                if (result === "granted") {
+                    navigator.serviceWorker.ready.then(serviceWorker => {
+                        serviceWorker.showNotification("Test Title", {
+                            body: 'test body',
+                            tag: "GO_DOTS_MAIN",
+                            actions: [
+                                {
+                                    action: "raids",
+                                    title: "Raids"
+                                },
+                                {
+                                    action: "eggs",
+                                    title: "Eggs"
+                                }
+                            ]
+                        })
+                    })
+                }
+            });
+    }
+
     return (
         <>
             <div className="calendar">
@@ -144,7 +168,7 @@ export default function Calendar({ date, events, settings }) {
             </div>
 
             <b>{new Date(state.selectedDay.date).toLocaleDateString()}</b>
-
+            <button onClick={showNotification}>CLICK ME</button>
             <Events {...state.selectedDay} />
         </>
     )

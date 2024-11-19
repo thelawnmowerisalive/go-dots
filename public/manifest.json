@@ -1,0 +1,12 @@
+{
+  "name": "GO Dots",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "icons": [
+    {
+      "src": "/go-dots/vite.svg",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

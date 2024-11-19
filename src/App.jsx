@@ -19,6 +19,14 @@ function App() {
       .then((text) => {
         setData(JSON.parse(text));
       });
+
+    const onMessage = (message) => {
+      console.log(message.data);
+    }
+    navigator.serviceWorker.addEventListener("message", onMessage);
+    return () => {
+      navigator.serviceWorker.removeEventListener("message", onMessage);
+    }
   }, []);
 
   if (!data) {
