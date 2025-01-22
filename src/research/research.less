@@ -1,0 +1,60 @@
+@colors: {
+    event: #f39c12;
+    catch: #27ae60;
+    throw: #16a085;
+    battle: #c0392b;
+    explore: #2980b9;
+    training: #d35400;
+    buddy: #8e44ad;
+    rocket: #2c3e50;
+}
+
+.research {
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .search {
+        margin-bottom: 0.5em;
+    }
+
+    .collapses {
+        overflow: auto;
+    }
+
+    .segment {
+        each(@colors, {
+            &.@{key} {
+                border: 3px solid @value;
+                border-top: 0;
+
+                .title {
+                    background-color: @value;
+                }
+            }
+        })
+}
+}
+
+.task {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.5em;
+    text-align: left;
+
+    &:nth-child(even) {
+        background-color: lighten(lightgray, 10%);
+    }
+
+    .rewards {
+        margin-left: auto;
+        text-align: right;
+
+        .shiny {
+            font-size: smaller;
+            padding-bottom: 0.5em;
+        }
+    }
+}

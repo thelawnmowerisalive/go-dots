@@ -17,11 +17,17 @@ function getFirstDayOfTheWeek(date, startOfWeek) {
     } while (true);
 }
 
-function goToStart(date) {
+/**
+ * @param {Date} date 
+ */
+function goToStartOfDay(date) {
     date.setHours(0, 0, 0, 0);
 }
 
-function goToEnd(date) {
+/**
+ * @param {Date} date 
+ */
+function goToEndOfDay(date) {
     date.setHours(23, 59, 59, 999);
 }
 
@@ -33,12 +39,12 @@ function goToEnd(date) {
  */
 function isBetween(day, start, end) {
     const date = new Date(day);
-    goToStart(date);
+    goToStartOfDay(date);
     if (end < date.getTime()) {
         // range ends before the start of the day
         return false;
     }
-    goToEnd(date);
+    goToEndOfDay(date);
     if (start > date.getTime()) {
         // range starts after the end of the day
         return false;
@@ -48,10 +54,10 @@ function isBetween(day, start, end) {
 
 function isSameDay([first, ...rest]) {
     const date = new Date(first);
-    goToStart(date);
+    goToStartOfDay(date);
     for (let t of rest) {
         const d = new Date(t);
-        goToStart(d);
+        goToStartOfDay(d);
         if (date.getTime() !== d.getTime()) {
             return false;
         }
@@ -63,4 +69,4 @@ function toHour(date) {
     return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-export { getFirstDayOfTheWeek, goToEnd, goToStart, isBetween, isSameDay, toHour };
+export { getFirstDayOfTheWeek, goToEndOfDay, goToStartOfDay, isBetween, isSameDay, toHour };

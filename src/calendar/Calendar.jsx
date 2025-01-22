@@ -3,21 +3,21 @@ import "./calendar.less";
 import Day from "./Day";
 import DayOfTheWeek from "./DayOfTheWeek";
 import Events from "./Events";
-import { getFirstDayOfTheWeek, goToStart, isBetween } from "./utils";
+import { getFirstDayOfTheWeek, goToStartOfDay, isBetween } from "./utils";
 
 /**
  * @param {{events: []}} 
  * @returns 
  */
-function createInitialState({ date, events, settings: { startOfWeek } }) {
+function createInitialState({ data, settings: { startOfWeek } }) {
     // find first day of the week
-    const today = date ? new Date(date) : new Date();
-    goToStart(today);
+    const today = new Date();
+    goToStartOfDay(today);
     const first = getFirstDayOfTheWeek(today, startOfWeek);
 
     // compute start time and end time for each event,
     // and sort by end time
-    events = events
+    const events = data
         .map(event => {
             const startTime = new Date(event.start).getTime();
             const endTime = new Date(event.end).getTime();
@@ -46,7 +46,7 @@ function createInitialState({ date, events, settings: { startOfWeek } }) {
     for (let i = 0; i < 28; i++) {
         const date = new Date(first);
         date.setDate(first.getDate() + i);
-        goToStart(date);
+        goToStartOfDay(date);
         const time = date.getTime();
         const todayIsTheDay = time === today.getTime();
         const day = {
@@ -108,8 +108,12 @@ function reducer(state, action) {
     }
 }
 
-export default function Calendar({ date, events, settings }) {
-    const [state, dispatch] = useReducer(reducer, { date, events, settings }, createInitialState);
+export default function Calendar({ data, settings }) {
+    const [state, dispatch] = useReducer(
+        reducer,
+        { data, settings },
+        createInitialState
+    );
 
     /**
      * @param {Date} day

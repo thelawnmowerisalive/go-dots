@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
+import { BsCalendar3 } from 'react-icons/bs';
+import { FaBinoculars } from 'react-icons/fa6';
+import { GiFishMonster } from 'react-icons/gi';
 import './App.css';
 import gh from "./assets/gh.svg";
 import leek from "./assets/leek.svg";
 import Calendar from './calendar/Calendar';
+import Tabs from './layout/Tabs';
+import Research from './research/Research';
+
+const BASE_URL = "https://raw.githubusercontent.com/bigfoott/ScrapedDuck/data/";
 
 const DEFAULT = {
   startOfWeek: 'monday'
 }
 
 function App() {
-  const [data, setData] = useState();
+  const [view, setView] = useState();
 
   useEffect(() => {
-    const request = new Request("https://raw.githubusercontent.com/bigfoott/ScrapedDuck/data/events.min.json");
-    fetch(request)
-      .then((response) => response.text())
-      .then((text) => {
-        setData(JSON.parse(text));
-      });
-
     const onMessage = (message) => {
       console.log(message.data);
     }
@@ -28,15 +28,47 @@ function App() {
     }
   }, []);
 
+  const requestData = (id) => {
+    const request = new Request(BASE_URL + id + ".min.json");
+    fetch(request)
+      .then((response) => response.text())
+      .then((text) => {
+        const data = JSON.parse(text);
+        switch (id) {
+          case Tabs.EVENTS:
+            setView(<Calendar data={data} settings={DEFAULT} />)
+            break;
+          case Tabs.RESEARCH:
+            setView(<Research data={data} />);
+            break;
+          default:
+            setView(<>HOW DID YOU EVEN GET HERE</>)
+            break;
+        }
+      });
+  }
 
-  
-  if (!data) {
-    return <>DATA NOT READY</>
+  const handleSelectTab = (id) => {
+    // retrieve data and show content
+    console.log(id);
+    requestData(id);
   }
 
   return (
     <>
-      <Calendar settings={DEFAULT} events={data} />
+      <header>
+        <Tabs
+          onSelect={handleSelectTab}
+          defaultTab={Tabs.RESEARCH}
+          tabs={[
+            { id: Tabs.EVENTS, icon: <BsCalendar3 /> },
+            { id: Tabs.RESEARCH, icon: <FaBinoculars /> },
+            { id: Tabs.RAIDS, icon: <GiFishMonster style={{ fontSize: '1.3em' }} /> }
+          ]}
+        />
+      </header>
+
+      {view}
 
       <footer>powered by
         <a className="link" target="_blank" href='https://leekduck.com/'>
