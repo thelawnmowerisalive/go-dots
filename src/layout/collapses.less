@@ -1,17 +1,34 @@
 .collapses {
     .segment {
+        // leave a gap between segments
         margin-bottom: 0.5rem;
 
+        // will display the title of the segment,
+        // and a blurb in a white highlight
         .title {
+            display: flex;
+            align-items: center;
             color: white;
             text-align: left;
             padding: 0.5em;
             position: relative;
             cursor: pointer;
 
+            .blurb {
+                white-space: nowrap;
+                font-style: italic;
+                font-size: smaller;
+                margin-left: 4px;
+                padding: 0 4px;
+                border-radius: 4px;
+                background-color: white;
+                color: var(--title-bg);
+                opacity: 0.8;
+            }
+
+            // align caret on the right side
             .caret {
-                position: absolute;
-                right: 0.5em;
+                margin-left: auto;
             }
         }
     }

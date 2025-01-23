@@ -171,8 +171,8 @@ export default function Calendar({ data, settings }) {
                 }
             </div>
 
-            <b>{new Date(state.selectedDay.date).toLocaleDateString()}</b>
-            <button onClick={showNotification}>CLICK ME</button>
+            {/* <b>{new Date(state.selectedDay.date).toLocaleDateString()}</b> */}
+            {/* <button onClick={showNotification}>CLICK ME</button> */}
             <Events {...state.selectedDay} />
         </>
     )

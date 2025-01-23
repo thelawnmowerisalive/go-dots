@@ -3,6 +3,7 @@ import { FaBinoculars } from "react-icons/fa6";
 import { GiHighGrass } from "react-icons/gi";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { HiOutlineGift, HiOutlineQuestionMarkCircle, HiOutlineSparkles } from "react-icons/hi2";
+import Collapses from "../layout/Collapses";
 import "./events.less";
 import { isSameDay, toHour } from "./utils";
 
@@ -36,7 +37,7 @@ export default function Events({ date, events }) {
 
     return (
         <div className="events">
-            {
+            {/* {
                 events?.slice().reverse().map(event => (
                     event === selectedEvent
                         ? <Event key={event.eventID} event={selectedEvent} />
@@ -52,7 +53,22 @@ export default function Events({ date, events }) {
                             </div>
                         </div>
                 ))
-            }
+            } */}
+            <Collapses>
+                {
+                    events?.slice().reverse().map(event => (
+                        <Collapses.Segment
+                            key={event.eventID}
+                            id={event.eventID}
+                            tag={event.eventType}
+                            title={event.name}
+                            blurb={blurb(date, event)}
+                        >
+                            <Event key={event.eventID} event={event} />
+                        </Collapses.Segment>
+                    ))
+                }
+            </Collapses>
         </div>
     )
 }
@@ -62,8 +78,7 @@ function Event({ event }) {
         end = new Date(event.end);
 
     return (
-        <div className={`event ${event.eventType} expanded`}>
-            <div className="name">{event.name}</div>
+        <div className="event">
             <div className="timeline">
                 <div className="time">
                     <label>Starts:</label>

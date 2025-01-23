@@ -59,7 +59,7 @@ function App() {
       <header>
         <Tabs
           onSelect={handleSelectTab}
-          defaultTab={Tabs.RESEARCH}
+          defaultTab={Tabs.EVENTS}
           tabs={[
             { id: Tabs.EVENTS, icon: <BsCalendar3 /> },
             { id: Tabs.RESEARCH, icon: <FaBinoculars /> },

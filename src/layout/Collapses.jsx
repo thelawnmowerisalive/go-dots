@@ -12,18 +12,18 @@ const CollapsesContext = createContext({
  * @param {{defaultTag: string, multi: boolean, children: []}}  
  * @returns 
  */
-export default function Collapses({ defaultTag, multi, children }) {
+export default function Collapses({ defaultTag: defaultSelection, multi, children }) {
     const [selection, setSelection] = useState([]);
     useEffect(() => {
-        setSelection([defaultTag]);
-    }, [defaultTag]);
+        setSelection([defaultSelection]);
+    }, [defaultSelection]);
 
-    const toggle = (tag) => {
+    const toggle = (selection) => {
         setSelection(prev => {
-            const index = prev.indexOf(tag);
+            const index = prev.indexOf(selection);
             if (index < 0) {
                 // open it (also check multi flag)
-                return multi ? prev.concat(tag) : [tag];
+                return multi ? prev.concat(selection) : [selection];
             } else {
                 // already open => hide it
                 const result = prev.concat();
@@ -47,10 +47,12 @@ export default function Collapses({ defaultTag, multi, children }) {
  * @param {{tag: string, children: []}}  
  * @returns 
  */
-function Segment({ tag, children }) {
+function Segment({ id, tag, title, blurb, children }) {
 
     // don't show empty segments
-    const notEmpty = children?.reduce((all, crt) => {
+    // make sure that we also don't receive an array of falsy values
+    const arr = Array.isArray(children) ? children : [children];
+    const notEmpty = arr.reduce((all, crt) => {
         return all || crt;
     }, false);
 
@@ -60,15 +62,19 @@ function Segment({ tag, children }) {
 
     const { selection, toggle } = useContext(CollapsesContext);
 
-    const isSelected = selection.indexOf(tag) >= 0;
+    const isSelected = selection.indexOf(id || tag) >= 0;
 
     return (
         <div className={`segment ${tag}`}>
             <div
                 className="title"
-                onClick={() => { toggle(tag) }}
+                onClick={() => { toggle(id || tag) }}
             >
-                {tag}
+                <div>
+                    {title || tag}
+                    {blurb && <span className="blurb">{blurb}</span>}
+                </div>
+
                 {isSelected ? <FaCaretUp className="caret up" /> : <FaCaretDown className="caret down" />}
             </div>
             {isSelected && children}
