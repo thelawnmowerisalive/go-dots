@@ -1,3 +1,5 @@
+@import "./../breakpoints.less";
+
 @colors: {
     event: #f39c12;
     catch: #27ae60;
@@ -9,8 +11,30 @@
     rocket: #2c3e50;
 }
 
+// @media @wide {
+//     .research .collapses {
+//         display: flex;
+//         flex-flow: column wrap;
+//         align-items: flex-start;
+//         align-content: space-between;
+
+//         .segment {
+//             width: 40%;
+//             margin-bottom: 0;
+//         }
+
+//         .segment:nth-child(odd) {
+//             order: 1;
+//         }
+
+//         .segment:nth-child(even) {
+//             order: 2;
+//         }
+//     }
+// }
+
 .research {
-    flex-grow: 1;
+    height: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -44,7 +68,7 @@
     padding: 0.5em;
     text-align: left;
 
-    &:nth-child(even) {
+    &:nth-child(odd) {
         background-color: lighten(lightgray, 10%);
     }
 

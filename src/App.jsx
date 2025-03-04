@@ -68,7 +68,10 @@ function App() {
         />
       </header>
 
-      {view}
+      <main>
+        {view}
+      </main>
+
 
       <footer>powered by
         <a className="link" target="_blank" href='https://leekduck.com/'>

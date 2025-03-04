@@ -1,8 +1,32 @@
 @import "./../colors.less";
+@import "./../breakpoints.less";
+
+.calendar-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+@media @wide {
+    .calendar-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .events {
+            // explicitly set the height to ensure
+            // correct scrolling behavior in wide view
+            height: 100%;
+        }
+    }
+}
 
 .calendar {
     display: flex;
+    flex: 0 1 40%;
     flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 1px;
 
     .day {
         /* on a row of 8 cols, each col will need 12.5%
@@ -45,7 +69,6 @@
                     }
                 })
             }
-
         }
     }
 }

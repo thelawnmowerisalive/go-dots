@@ -157,7 +157,7 @@ export default function Calendar({ data, settings }) {
     }
 
     return (
-        <>
+        <div className="calendar-container">
             <div className="calendar">
                 {header}
                 {
@@ -174,7 +174,7 @@ export default function Calendar({ data, settings }) {
             {/* <b>{new Date(state.selectedDay.date).toLocaleDateString()}</b> */}
             {/* <button onClick={showNotification}>CLICK ME</button> */}
             <Events {...state.selectedDay} />
-        </>
+        </div>
     )
 
 }
